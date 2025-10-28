@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Treasure Island Game</title>
+  <style>
+    body {
+      font-family: monospace;
+      background-color: #111;
+      color: #0f0;
+      padding: 20px;
+      line-height: 1.5;
+    }
+    button {
+      margin: 8px;
+      padding: 8px 14px;
+      background: #0f0;
+      color: #111;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button:hover {
+      background: #9f9;
+    }
+    pre {
+      color: #0ff;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <pre>
+*******************************************************************************
+          |                   |                  |                     |
+ _________|________________.=""_;=.______________|_____________________|_______
+|                   |  ,-"_,=""     `"=.|                  |
+|___________________|__"=._o`"-._        `"=.______________|___________________
+          |                `"=._o`"=._      _`"=._                     |
+ _________|_____________________:=._o "=._."_.-="'"=.__________________|_______
+|                   |    __.--" , ; `"=._o." ,-"""-._ ".   |
+|___________________|_._"  ,. .` ` `` ,  `"-._"-._   ". '__|___________________
+          |           |o`"=._` , "` `; .". ,  "-._"-._; ;              |
+ _________|___________| ;`-.o`"=._; ." ` '`."\ ` . "-._ /_______________|_______
+|                   | |o ;    `"-.o`"=._``  '` " ,__.--o;   |
+|___________________|_| ;     (#) `-.o `"=.`_.--"_o.-; ;___|___________________
+____/______/______/___|o;._    "      `".o|o_.--"    ;o;____/______/______/____
+/______/______/______/_"=._o--._        ; | ;        ; ;/______/______/______/_
+____/______/______/______/__"=._o--._   ;o|o;     _._;o;____/______/______/____
+/______/______/______/______/____"=._o._; | ;_.--"o.--"_/______/______/______/_
+____/______/______/______/______/_____"=.o|o_.--""___/______/______/______/____
+/______/______/______/______/______/______/______/______/______/______/_____ /
+*******************************************************************************
+  </pre>
+  <h2>Welcome to Treasure Island.</h2>
+  <p>Your mission is to find the treasure.</p>
+
+  <p id="output"></p>
+  <div id="choices"></div>
+
+  <script>
+    function show(text, buttons = []) {
+      document.getElementById("output").innerText = text;
+      const choiceDiv = document.getElementById("choices");
+      choiceDiv.innerHTML = "";
+      buttons.forEach((b) => {
+        const btn = document.createElement("button");
+        btn.textContent = b.text;
+        btn.onclick = b.action;
+        choiceDiv.appendChild(btn);
+      });
+    }
+
+    function start() {
+      show("You're at a cross road. Where do you want to go?", [
+        { text: "Left", action: lake },
+        { text: "Right", action: () => show("The game is over.", []) },
+      ]);
+    }
+
+    function lake() {
+      show("Now you have come across a lake. Would you like to swim or wait for a boat to arrive?", [
+        { text: "Swim", action: () => show("Oops! You have been bitten by SLuttyWhale and swallowed. You lost the game.", []) },
+        { text: "Wait", action: island },
+      ]);
+    }
+
+    function island() {
+      show("The Boat has arrived with on-deck Captain Sir Mutee. You have been carefully escorted to an island called iLand.", [
+        { text: "Hire a guide", action: house },
+        { text: "Use Google Maps", action: () => show("You're in the middle of nowhere, dummy! There's no internet here. Didn't the hot captain tell you that earlier?", []) },
+      ]);
+    }
+
+    function house() {
+      show("You have now reached the house! This is the final step to find the TREASURE. You have 3 doors: blue, red, and brown. Choose wisely (hint: I like blue).", [
+        { text: "Blue Door", action: () => show("HURRAY! 🎉 You have found the treasure! How did you know it was the blue color, smartpants?!", []) },
+        { text: "Red Door", action: () => show("You have been forcefully involved in an orgy full of anacondas. 💀", []) },
+        { text: "Brown Door", action: () => show("You fell into a ditch that led you out of the island. Game over!", []) },
+      ]);
+    }
+
+    start();
+  </script>
+</body>
+</html>
